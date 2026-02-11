@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Katita 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+
+body{
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+background:black;
+color:white;
+}
+
+/* Collage fondo */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+grid-template-rows:repeat(3,1fr);
+z-index:-1;
+}
+.bg img{
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:.35;
+filter:brightness(.7);
+animation:zoom 12s infinite alternate;
+}
+@keyframes zoom{
+from{transform:scale(1)}
+to{transform:scale(1.15)}
+}
+
+/* Contenedor */
+.container{
+text-align:center;
+background:rgba(255,255,255,0.08);
+padding:40px;
+border-radius:20px;
+backdrop-filter:blur(10px);
+box-shadow:0 0 40px rgba(255,0,128,0.4);
+}
+
+h1{font-size:2.3rem;margin-bottom:25px;}
+
+.buttons{position:relative;height:140px;width:300px;margin:auto;}
+
+button{
+position:absolute;
+padding:14px 32px;
+border:none;
+border-radius:40px;
+font-size:1.2rem;
+cursor:pointer;
+transition:.2s;
+}
+
+#yesBtn{
+left:20px;
+background:linear-gradient(45deg,#ff4d88,#ff99cc);
+color:white;
+}
+
+#noBtn{
+right:20px;
+background:#eee;
+color:#333;
+}
+
+.success{
+display:none;
+margin-top:20px;
+font-size:1.6rem;
+animation:fadeIn 1s forwards;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* Carta */
+.letter{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+background:white;
+color:#333;
+padding:30px;
+border-radius:15px;
+width:320px;
+text-align:center;
+box-shadow:0 0 30px rgba(0,0,0,0.3);
+transition:.5s;
+z-index:5;
+}
+.letter.show{transform:translate(-50%,-50%) scale(1);}
+
+/* Rosas */
+.rose{
+position:absolute;
+font-size:24px;
+animation:fall 6s linear infinite;
+}
+@keyframes fall{
+0%{transform:translateY(-10vh);opacity:1}
+100%{transform:translateY(110vh);opacity:0}
+}
+
+/* Brillos */
+.sparkle{
+position:absolute;
+width:6px;height:6px;
+background:white;
+border-radius:50%;
+animation:blink 1.5s infinite;
+}
+@keyframes blink{50%{opacity:0}}
+
+/* Confeti */
+.confetti{
+position:absolute;
+width:8px;height:8px;
+animation:fallConfetti 3s linear forwards;
+}
+@keyframes fallConfetti{
+to{transform:translateY(100vh) rotate(720deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Fondo collage -->
+<div class="bg">
+<img src="foto1.jpg">
+<img src="foto2.jpg">
+<img src="foto3.jpg">
+<img src="foto4.jpg">
+<img src="foto5.jpg">
+<img src="foto6.jpg">
+<img src="foto7.jpg">
+<img src="foto8.jpg">
+<img src="foto9.jpg">
+<img src="foto10.jpg">
+<img src="foto11.jpg">
+<img src="foto12.jpg">
+</div>
+
+<div class="container">
+<h1>Katita 💖<br>¿Quieres ser mi San Valentín?</h1>
+
+<div class="buttons">
+<button id="yesBtn">SÍ 💘</button>
+<button id="noBtn">NO 🙈</button>
+</div>
+
+<div class="success">Sabía que dirías que sí 💍✨</div>
+</div>
+
+<!-- Carta -->
+<div class="letter" id="letter">
+<h2>Para ti Katita 💌</h2>
+<p>
+Desde que llegaste a mi vida todo es más bonito.<br>
+Tu sonrisa ilumina mis días y mi corazón es tuyo.<br><br>
+¿Aceptas vivir esta historia conmigo? 💖
+</p>
+</div>
+
+<!-- Música automática -->
+<audio id="music" autoplay loop>
+<source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b4d7c4f0.mp3?filename=romantic-love-ambient-11071.mp3">
+</audio>
+
+<script>
+const noBtn=document.getElementById("noBtn");
+const yesBtn=document.getElementById("yesBtn");
+const success=document.querySelector(".success");
+const letter=document.getElementById("letter");
+const music=document.getElementById("music");
+
+let scale=1;
+
+/* Botón NO */
+function moverNo(){
+scale-=0.08;
+if(scale<0.4) scale=0.4;
+noBtn.style.transform=`scale(${scale})`;
+noBtn.style.left=Math.random()*220+"px";
+noBtn.style.top=Math.random()*100+"px";
+}
+noBtn.addEventListener("mouseenter",moverNo);
+noBtn.addEventListener("touchstart",(e)=>{e.preventDefault();moverNo();});
+
+/* Botón SÍ */
+yesBtn.addEventListener("click",()=>{
+success.style.display="block";
+letter.classList.add("show");
+lanzarConfeti();
+crearPropuesta();
+});
+
+/* Confeti */
+function lanzarConfeti(){
+for(let i=0;i<150;i++){
+let c=document.createElement("div");
+c.className="confetti";
+c.style.left=Math.random()*100+"vw";
+c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),3000);
+}
+}
+
+/* Anillo 💍 */
+function crearPropuesta(){
+let ring=document.createElement("div");
+ring.innerHTML="💍";
+ring.style.position="fixed";
+ring.style.fontSize="60px";
+ring.style.left="50%";
+ring.style.top="70%";
+ring.style.transform="translate(-50%,-50%) scale(0)";
+ring.style.transition="1s";
+document.body.appendChild(ring);
+setTimeout(()=>{ring.style.transform="translate(-50%,-50%) scale(1.3)";},100);
+}
+
+/* Rosas */
+function rose(){
+let r=document.createElement("div");
+r.className="rose";
+r.innerHTML="🌹";
+r.style.left=Math.random()*100+"vw";
+document.body.appendChild(r);
+setTimeout(()=>r.remove(),6000);
+}
+setInterval(rose,500);
+
+/* Brillos */
+function sparkle(){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),1500);
+}
+setInterval(sparkle,200);
+
+/* Activar música si navegador bloquea */
+document.body.addEventListener("click",()=>{music.play().catch(()=>{});});
+</script>
+
+</body>
+</html>
+foto1.jpg
+foto2.jpg
+foto3.jpg
+foto4.jpg
+foto5.jpg
+foto6.jpg
+foto7.jpg
+foto8.jpg
+foto9.jpg
+foto10.jpg
+foto11.jpg
+foto12.jpg
+
+
